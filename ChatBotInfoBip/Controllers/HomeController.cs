@@ -56,7 +56,7 @@ namespace ChatBotInfoBip.Controllers
                 if (type == "1")
                 {
                     ContentMessage bodyText = new ContentMessage();
-                    bodyText.text = message;
+                    bodyText.text = $"metodo 1: {message}";
 
                     SendMessageInfoBip dataSend = new SendMessageInfoBip();
                     dataSend.to = $"51{phone}";
@@ -65,10 +65,11 @@ namespace ChatBotInfoBip.Controllers
                     var client = new RestClient("https://ejmrvn.api.infobip.com/");
                     client.Options.Timeout = -1;
                     var request = new RestRequest($"ccaas/1/conversations/{conversationId}/messages", Method.Post);
-                    request.AddHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
-                    request.AddHeader("Accept", "application/json");
-                    request.AddHeader("Content-Type", "application/json");
-                    request.AddBody(JsonConvert.SerializeObject(dataSend), "application/json");
+                    request.AddOrUpdateHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
+                    request.AddOrUpdateHeader("Accept", "application/json");
+                    request.AddOrUpdateHeader("Content-Type", "application/json");
+                    request.AddBody(dataSend, "application/json");
+
                     var response = client.Execute(request);
 
                     return Json(response);
@@ -76,7 +77,7 @@ namespace ChatBotInfoBip.Controllers
                 else
                 {
                     ContentMessage bodyText = new ContentMessage();
-                    bodyText.text = message;
+                    bodyText.text = $"metodo 2: {message}";
 
                     SendMessageInfoBip2 dataSend = new SendMessageInfoBip2();
                     dataSend.to = $"51{phone}";
@@ -88,7 +89,7 @@ namespace ChatBotInfoBip.Controllers
                     request.AddHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
                     request.AddHeader("Accept", "application/json");
                     request.AddHeader("Content-Type", "application/json");
-                    request.AddBody(JsonConvert.SerializeObject(dataSend), "application/json");
+                    request.AddBody(dataSend, "application/json");
                     var response = client.Execute(request);
 
                     return Json(response);

@@ -10,13 +10,14 @@ namespace ChatBotInfoBip.Models
         public string from { get; set; } = "447860099299";
         public string to { get; set; }
         public string channel { get; set; } = "WHATSAPP";
-        public string contentType { get; set; } = "TEXT";
+        public string contentType { get; set; } = "IMAGE";
         public ContentMessage content { get; set; }
 
     }
     public class ContentMessage
     {
         public string text { get; set; }
+        public string url { get; set; } = "https://www.url.com/assets/image.jpg";
     }
 
 
