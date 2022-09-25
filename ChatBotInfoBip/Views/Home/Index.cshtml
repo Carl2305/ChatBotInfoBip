@@ -1,0 +1,94 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<div class="row">
+    <div>Formulario para el Systema o Bot</div>
+    1: enviar por conversation
+    2: enviar por whatsapp separado
+    <div class="col-12">
+        @using (Html.BeginForm("sendMessage", "Home", FormMethod.Post))
+        {
+        <div class="row">
+            <div class="col-5"><label>TIPO</label></div>
+            <div class="col-7">
+                <input class="form-control" name="type" />
+            </div>
+            <div class="col-5"><label>ID Conversation</label></div>
+            <div class="col-7">
+                <input class="form-control" name="idconver" />
+            </div>
+            <div class="col-3"><label>Telefono</label></div>
+            <div class="col-9">
+                <input class="form-control" name="phone" />
+            </div>
+            <div class="col-3"><label>Mensaje</label></div>
+            <div class="col-9">
+                <input class="form-control" name="message" />
+            </div>
+            <div class="col-12">
+                <div class="justify-content-sm-end">
+                    <button type="submit">Enviar</button>
+                </div>
+            </div>
+        </div>
+         }
+    </div>
+</div>
+<br /><br />
+      <div class="row">
+          <h1 id="idconvertext"> Id conversacion</h1>
+          <div class="col-12" id="messages">
+              <p>Mensaje</p>
+          </div>
+      </div>
+
+
+
+
+
+@section Scripts{
+    
+    <script>
+        $(document).ready(() => {
+            getMessages();
+        });
+
+        function getMessages() {
+            $.ajax({
+                url: '@Url.Action("getMessages", "Home")',
+                method: 'GET',
+                contentType: 'application/json',
+                success: (_r) => {
+                    printMessages(JSON.parse(_r));
+                },
+                error: (e) => {
+                    console.log(e)
+                }
+            });
+        }
+
+        function printMessages(data) {
+
+            $("#idconvertext").text(data.messages[0].conversationId);
+
+            $("#messages").empty();
+            let html = '';
+            $.each(data.messages, (index, item) => {
+                if (item.direction == 'INBOUND') {
+                    html += `<p>Cliente: ${item.content.text}</p>`;
+                } else {
+                    html += `<p>Bot: ${item.content.text}</p>`;
+                }
+            });
+
+
+            $("#messages").append(html);
+        }
+
+    </script>
+
+}
+
+
