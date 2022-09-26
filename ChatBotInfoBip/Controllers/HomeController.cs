@@ -35,7 +35,7 @@ namespace ChatBotInfoBip.Controllers
             client.Options.Timeout = -1;
             var request = new RestRequest("ccaas/1/conversations/63BA8541BE6C5304BF72EA41F5099ED5/messages", Method.Get);
             request.Parameters.AddParameter(Parameter.CreateParameter("orderBy", "createdAt:ASC", ParameterType.QueryString));
-            request.Parameters.AddParameter(Parameter.CreateParameter("limit", 100, ParameterType.QueryString));
+            request.Parameters.AddParameter(Parameter.CreateParameter("limit", 50, ParameterType.QueryString));
             request.AddHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
             request.AddHeader("Accept", "application/json");
             var response = client.Execute(request);

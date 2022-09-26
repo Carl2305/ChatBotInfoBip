@@ -77,9 +77,9 @@
             let html = '';
             $.each(data.messages, (index, item) => {
                 if (item.direction == 'INBOUND') {
-                    html += `<p>Cliente: text: ${item.content.text} --> url: ${item.content.url}</p>`;
+                    html += `<p>Cliente: ${(item.contentType == 'TEXT') ? item.content.text : item.content.url}</p>`;
                 } else {
-                    html += `<p>Bot: ${item.content.text} --> url: ${item.content.url}</p>`;
+                    html += `<p>Bot: ${(item.contentType == 'TEXT') ? item.content.text : item.content.url}</p>`;
                 }
             });
 
