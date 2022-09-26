@@ -16,7 +16,6 @@ namespace ChatBotInfoBip.Models
     }
     public class ContentMessage
     {
-        public string text { get; set; }
         public string url { get; set; } = "https://www.url.com/assets/image.jpg";
     }
 
@@ -25,7 +24,14 @@ namespace ChatBotInfoBip.Models
     {
         public string from { get; set; } = "447860099299";
         public string to { get; set; }
-        public ContentMessage content { get; set; }
+        public ContentMessage2 content { get; set; }
 
     }
+
+    public class ContentMessage2
+    {
+        public string text { get; set; }
+        public string url { get; set; } = "https://www.url.com/assets/image.jpg";
+    }
+
 }
