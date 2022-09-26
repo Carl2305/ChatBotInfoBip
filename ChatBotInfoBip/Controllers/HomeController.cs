@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
+using System.Collections.Generic;
 
 namespace ChatBotInfoBip.Controllers
 {
@@ -55,8 +56,9 @@ namespace ChatBotInfoBip.Controllers
             {
                 if (type == "1")
                 {
+                    
                     ContentMessage bodyText = new ContentMessage();
-                    bodyText.url = $"https://www.url.com/assets/image.jpg";
+                    bodyText.url = message;
 
                     SendMessageInfoBip dataSend = new SendMessageInfoBip();
                     dataSend.to = $"51{phone}";
@@ -78,7 +80,7 @@ namespace ChatBotInfoBip.Controllers
                 }
                 else
                 {
-                    ContentMessage2 bodyText = new ContentMessage2();
+                    ContentMessage bodyText = new ContentMessage();
                     bodyText.text = $"metodo 2: {message}";
 
                     SendMessageInfoBip2 dataSend = new SendMessageInfoBip2();
