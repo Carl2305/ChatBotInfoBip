@@ -107,6 +107,15 @@ namespace ChatBotInfoBip.Controllers
 
         }
 
+        public JsonResult enventwebhook()
+        {
+
+
+            return Json(new { });
+        }
+
+
+
 
         public IActionResult Privacy()
         {
