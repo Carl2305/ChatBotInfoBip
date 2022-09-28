@@ -89,16 +89,30 @@
         }
 
         function printMessages(data) {
-
             $("#idconvertext").text(data.messages[0].conversationId);
 
             $("#messages").empty();
             let html = '';
             $.each(data.messages, (index, item) => {
-                if (item.direction == 'INBOUND') {
-                    html += `<p>Cliente: ${(item.contentType == 'TEXT') ? item.content.text : item.content.url}</p>`;
-                } else {
-                    html += `<p>Bot: ${(item.contentType == 'TEXT') ? item.content.text : item.content.url}</p>`;
+                if (item.contentType == 'TEXT') {
+                    if (item.direction == 'INBOUND') {
+                        html += `<p>Cliente: ${item.content.text}</p>`;
+                    } else {
+                        html += `<p>Bot: ${item.content.text}</p>`;
+                    }
+                } else if (item.contentType == 'IMAGE') {
+                    if (item.direction == 'INBOUND') {
+                        html += `<div class="border-danger">
+                                    <p>CLiente: </p>
+                                    <img src="${item.content.url}">
+                                </div>`;
+                    } else {
+                        html += `<div class="border-danger">
+                                    <p>Bot: </p>
+                                    <img src="${item.content.url}">
+                                </div>`;
+                    }
+
                 }
             });
 
