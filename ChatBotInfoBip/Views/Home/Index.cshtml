@@ -120,6 +120,99 @@
             $("#messages").append(html);
         }
 
+        var response;
+        function loadImage() {
+            $.ajax({
+                beforeSend: (rq) => {
+                    rq.setRequestHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
+                    rq.setRequestHeader("Content-Disposition", "attachment");
+                    rq.setRequestHeader("Content-Type", "image/jpeg; charset=utf-8");
+                },
+                url: "https://portal.infobip.com/conversations/api/amg/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98",
+                method: 'GET',
+                dataType: 'html',
+                async: false,
+                crossDomain: 'true',
+                success: (_r) => {
+                    response = _r;
+                    //console.log(btoa(unescape(encodeURIComponent(_r))));
+                    //console.log(atob(btoa(unescape(encodeURIComponent(_r)))));
+                    //console.log(btoa(btoa(atob(btoa(unescape(encodeURIComponent(_r)))))));
+                    //var image = new Image();
+                    //image.src = "data:image/jpeg;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(_r)));
+                    //document.body.appendChild(image)
+
+
+                },
+                error: (e) => {
+                    console.log(e)
+                }
+            });
+        }
+
+        function showImage() {
+            @*$.ajax({
+                url: '@Url.Action("getImage", "Home")',
+                method: 'GET',
+                contentType: 'application/json',
+                success: (_r) => {
+                    console.log(btoa(unescape(encodeURIComponent(_r.image64))))
+                    
+                },
+                error: (e) => {
+                    console.log(e)
+                }
+            });*@
+
+
+            fetch('https://api.infobip.com/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98', {
+                method: 'GET',
+                headers: {
+                    "Authorization": "App d511b6ab94f47b9b19a65676e7fa2bb8-0ef493ad-59be-46dd-8201-972b8eda97a9"
+                }
+            })
+                .then((data) => {
+                    // IMP to convert your json or other response to blob ( for this you have to check your api response is file / binary 
+                    return data.blob()
+                })
+                .then((data) => {
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var b64 = reader.result
+                        console.log("This is base64", b64)
+                    }
+                    reader.readAsDataURL(data)
+                })
+                .catch((error) => {
+                    error.text().then(errorMessage => {
+                        console.log(errorMessage)
+                    })
+                })
+
+
+        }
+
+        function logIng() {
+            var settings = {
+                "url": "https://ejmrvn.api.infobip.com/auth/1/session",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                "data": JSON.stringify({
+                    "username": "carlosinfobip",
+                    "password": "EXT#$Z7NcWORKi202",
+                    "unsafe": true
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
+
     </script>
 
 }

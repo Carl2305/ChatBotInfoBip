@@ -27,6 +27,21 @@ namespace ChatBotInfoBip.Controllers
         }
 
         [HttpGet]
+        public JsonResult getImage()
+        {
+            var client = new RestClient("https://api.infobip.com/");
+            client.Options.Timeout = -1;
+            var request = new RestRequest("whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98", Method.Get);
+            request.AddHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
+            request.AddHeader("Accept", "image/jpeg");
+            request.AddHeader("Content-Type", "image/jpeg");
+            var response = client.Execute(request);
+
+
+            return Json(new { status = Ok(), image64 = response.Content });
+        }
+
+        [HttpGet]
         public JsonResult getMessages()
         {
             // esto optiene el chat completo de una conversacion por id de conversación
@@ -63,6 +78,7 @@ namespace ChatBotInfoBip.Controllers
                     SendMessageInfoBip dataSend = new SendMessageInfoBip();
                     dataSend.to = $"51{phone}";
                     dataSend.content = bodyText;
+                    dataSend.contentType = "IMAGE";
 
                     var client = new RestClient("https://ejmrvn.api.infobip.com/");
                     client.Options.Timeout = -1;
@@ -86,6 +102,7 @@ namespace ChatBotInfoBip.Controllers
                     SendMessageInfoBip2 dataSend = new SendMessageInfoBip2();
                     dataSend.to = $"51{phone}";
                     dataSend.content = bodyText;
+                    dataSend.contentType = "TEXT";
 
                     var client = new RestClient("https://ejmrvn.api.infobip.com/");
                     client.Options.Timeout = -1;

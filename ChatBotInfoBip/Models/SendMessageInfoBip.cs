@@ -10,7 +10,7 @@ namespace ChatBotInfoBip.Models
         public string from { get; set; } = "447860099299";
         public string to { get; set; }
         public string channel { get; set; } = "WHATSAPP";
-        public string contentType { get; set; } = "IMAGE";
+        public string contentType { get; set; }
         public ContentMessage content { get; set; }
 
     }
@@ -26,6 +26,7 @@ namespace ChatBotInfoBip.Models
         public string from { get; set; } = "447860099299";
         public string to { get; set; }
         public ContentMessage content { get; set; }
+        public string contentType { get; set; }
 
     }
 
