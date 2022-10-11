@@ -4,6 +4,7 @@
 
 
 <div class="row">
+    <img id="myImage"/>
     <div>Formulario para el Systema o Bot</div>
     1: enviar por conversation
     2: enviar por whatsapp separado
@@ -49,11 +50,20 @@
 
 
 @section Scripts{
-    
+    <script src="https://rtc.cdn.infobip.com/latest/infobip.rtc.js"></script>
+
+
+
+
     <script>
         $(document).ready(() => {
-            getMessages();
 
+
+           
+
+
+            getMessages();
+            //loadImages();
 
 
             //setInterval( () => {
@@ -111,6 +121,8 @@
                                     <p>Bot: </p>
                                     <img src="${item.content.url}">
                                 </div>`;
+
+                        //loadImages(item.content.url)
                     }
 
                 }
@@ -119,98 +131,72 @@
 
             $("#messages").append(html);
         }
-
-        var response;
-        function loadImage() {
+        var blobimage;
+        function loadImages() {
             $.ajax({
-                beforeSend: (rq) => {
-                    rq.setRequestHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
-                    rq.setRequestHeader("Content-Disposition", "attachment");
-                    rq.setRequestHeader("Content-Type", "image/jpeg; charset=utf-8");
+                beforeSend: req => {
+                    req.setRequestHeader("Authorization", "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338");
                 },
-                url: "https://portal.infobip.com/conversations/api/amg/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98",
-                method: 'GET',
-                dataType: 'html',
-                async: false,
-                crossDomain: 'true',
-                success: (_r) => {
-                    response = _r;
-                    //console.log(btoa(unescape(encodeURIComponent(_r))));
-                    //console.log(atob(btoa(unescape(encodeURIComponent(_r)))));
-                    //console.log(btoa(btoa(atob(btoa(unescape(encodeURIComponent(_r)))))));
-                    //var image = new Image();
-                    //image.src = "data:image/jpeg;charset=utf-8;base64," + btoa(unescape(encodeURIComponent(_r)));
-                    //document.body.appendChild(image)
-
+                url: "https://api.infobip.com/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98",
+                type: 'GET',
+                crossDomain: true,
+                processData: false,
+                contentType: 'image/jpeg',
+                async:false,
+                //dataType: 'image',
+                success: r => {
+                    blobimage = r;
+                    //console.log(encodeURIComponent(r));
 
                 },
-                error: (e) => {
-                    console.log(e)
-                }
-            });
-        }
-
-        function showImage() {
-            @*$.ajax({
-                url: '@Url.Action("getImage", "Home")',
-                method: 'GET',
-                contentType: 'application/json',
-                success: (_r) => {
-                    console.log(btoa(unescape(encodeURIComponent(_r.image64))))
-                    
-                },
-                error: (e) => {
-                    console.log(e)
-                }
-            });*@
-
-
-            fetch('https://api.infobip.com/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98', {
-                method: 'GET',
-                headers: {
-                    "Authorization": "App d511b6ab94f47b9b19a65676e7fa2bb8-0ef493ad-59be-46dd-8201-972b8eda97a9"
-                }
+                error: e => { console.log(e); }
             })
-                .then((data) => {
-                    // IMP to convert your json or other response to blob ( for this you have to check your api response is file / binary 
-                    return data.blob()
-                })
-                .then((data) => {
-                    var reader = new FileReader();
-                    reader.onload = function () {
-                        var b64 = reader.result
-                        console.log("This is base64", b64)
-                    }
-                    reader.readAsDataURL(data)
-                })
-                .catch((error) => {
-                    error.text().then(errorMessage => {
-                        console.log(errorMessage)
-                    })
-                })
+
+            //var settings = {
+            //    "url": "https://api.infobip.com/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98",
+            //    "method": "GET",
+            //    "timeout": 0,
+            //    "headers": {
+            //        "Authorization": "App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338",
+            //        "Accept": "application/json"
+            //    },
+            //};
+
+            //$.ajax(settings).done(function (response) {
+
+            //    var rawResponse = "�PNG...."; // truncated for example
+
+            //    // convert to Base64
+            //    var b64Response = btoa(rawResponse);
+
+            //    // create an image
+            //    var outputImg = document.createElement('img');
+            //    outputImg.src = 'data:image/png;base64,' + b64Response;
+
+            //    // append it to your page
+            //    document.body.appendChild(outputImg);
+
+            //});
 
 
-        }
+            //let data;
+            //fetch("https://api.infobip.com/whatsapp/1/senders/447860099299/media/efad5e32-0777-4f0e-893c-334b38b5ee98", {
+            //    headers: {
+            //        'Authorization': 'App e528f01bf9a72356e3186d6458b2b9d6-e19736de-1b2a-45fe-810d-7690c9782338'
+            //        // 'Content-Type': 'application/x-www-form-urlencoded',
+            //    }
+            //}).then(response => {
+            //    console.log(response)
 
-        function logIng() {
-            var settings = {
-                "url": "https://ejmrvn.api.infobip.com/auth/1/session",
-                "method": "POST",
-                "timeout": 0,
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                "data": JSON.stringify({
-                    "username": "carlosinfobip",
-                    "password": "EXT#$Z7NcWORKi202",
-                    "unsafe": true
-                }),
-            };
 
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-            });
+            //    response.blob().then(blobResponse => {
+            //        console.log(blobResponse);
+
+            //    })
+            //});
+
+            //const urlCreator = window.URL || window.webkitURL;
+            //document.getElementById('myImage').src = urlCreator.createObjectURL(data);
         }
 
     </script>

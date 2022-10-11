@@ -9,4 +9,6 @@
     <PackageReference Include="RestSharp" Version="108.0.2" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="https://goreleaser.com/static/schema-pro.json" /></VisualStudio></ProjectExtensions>
+
 </Project>
